@@ -22,15 +22,15 @@ set /p device=
 )
 if "%device%" NEQ "" set device=-s %device%
 
-for /f "delims=" %%i in ('adb %device% shell ifconfig ^| find "inet addr:192.168."'
+for /f "delims=" %%i in ('adb %device% shell ip a sh wlan0 ^| find "inet 192.168."'
+)do (
+set ip=%%i
+)
+for /f "tokens=1,2 delims=/" %%i in ("%ip%"
 )do (
 set ip=%%i
 )
 for /f "tokens=1,2,* delims= " %%i in ("%ip%"
-)do (
-set ip=%%j
-)
-for /f "tokens=1,2,* delims=:" %%i in ("%ip%"
 )do (
 set ip=%%j
 )
