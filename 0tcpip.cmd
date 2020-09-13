@@ -3,22 +3,29 @@ echo.
 echo 开启远程调试
 echo =====================================
 
-set /a cnt=0
-for /f "delims=" %%i in ('adb devices'
-)do (
-call :count
-)
-if %cnt% EQU 1 (
-echo No device found, Please connect
-adb wait-for-device 
-)
-
 SET device=
-if %cnt% GTR 2 (
-echo,
-adb devices
-echo More than one devices found, Please input your target device
-set /p device=
+set /a cnt=0
+::adb wait-for-device
+for /f "delims=" %%i in ('adb devices ^| find /v "5555" ^| find /v "List of devices attached"'
+)do (
+	set device=%%i
+	call :count
+)
+if %cnt% LSS 1 (
+	echo No device found, Please connet it with your cable
+	call :usage
+	goto done
+)
+if %cnt% GEQ 2 (
+	echo,
+	adb devices
+	echo More than one devices found, Please input your target device
+	set /p device=
+) else (
+	for /f "tokens=1,* delims='	'" %%i in ("%device%"
+	)do (
+		set device=%%i
+	)
 )
 if "%device%" NEQ "" set device=-s %device%
 
@@ -37,7 +44,7 @@ set ip=%%j
 
 if "%ip%" EQU "" goto error_no_ip
 echo connecting %ip%
-adb %device% tcpip 5555
+adb %device% tcpip 5555	
 adb %device% connect %ip%:5555
 
 rem 等待2s
@@ -72,9 +79,12 @@ echo %%i
 set /a cnt=%cnt%+1
 goto :eof
 :usage
-echo usage
-echo 1. usb连接设备
-echo 2. 设备和电脑连接同一个wifi
+::echo usage:
+::echo 1. usb连接设备
+::echo 2. 设备和电脑连接同一个wifi
+call colorStr "Usage" 2 79
+call colorStr "1. usb连接设备" 2
+call colorStr "2. 设备和电脑连接同一个wifi" 2
 goto :eof
 
 :done
