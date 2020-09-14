@@ -2,7 +2,7 @@
 
 set str=100x200x300y400y500x600y700
 
-for /f "tokens=1,3-5,* delims=x|y" %%a in ("%str%") do (
+for /f "tokens=1,3-5,* delims=xy" %%a in ("%str%") do (
 	set c1=%%a
 	set c3=%%b
 	set c4=%%c
