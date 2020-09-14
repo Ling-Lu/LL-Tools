@@ -2,8 +2,8 @@
 echo.
 echo ===========Test pieces==================
 
-
-
+call :colorStr nihao 2
+call :colorStr nihao 1 f5
 
 :done
 echo =====================================
@@ -72,12 +72,14 @@ echo suffix
 :colorStr
 set msg=%1
 set colorMod=%2
+set color=%3
+if "" equ "%color%" set color=0c
 echo %msg% %colorMod%
 if "" equ "%msg%" goto :eof
 if "%colorMod%" equ "1" (
-set /p= <nul>%msg%&findstr /a:d .* %msg%*&del /q %msg%
+set /p= <nul>%msg%&findstr /a:%color% .* %msg%*&del /q %msg%
 ) else (
-echo. >%msg%&findstr /a:a .* %msg%*&del /q %msg%
+echo. >%msg%&findstr /a:%color% .* %msg%*&del /q %msg%
 )
 goto :eof
 
