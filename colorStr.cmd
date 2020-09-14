@@ -4,8 +4,7 @@ set msg=%1
 set colorMod=%2
 set colorAttr=%3
 if "" equ "%colorAttr%" set colorAttr=fd
-if "" equ "%msg%" goto :eof
-
+if "%msg%" equ "" goto :eof
 
 ::msg 中不能包含文件名禁止的字符"：< > / \ | : " * ?"
 set ForbiddenStr="/" "\" ":"
@@ -31,7 +30,6 @@ goto noError
 set msg="Error String containing forbidden character"
 set colorAttr=fc
 :noError
-
 
 if "%colorMod%" equ "1" (
 set /p= <nul>%msg%&findstr /a:%colorAttr% .* %msg%*&del /q %msg%
