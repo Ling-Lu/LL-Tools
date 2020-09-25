@@ -16,3 +16,26 @@ for /f "tokens=1,2-6 delims=/} " %%m in ("%%i") do (
 
 1. 只能单个字符做分割符
 2. 分割字符为多个并且包含空格时，空格要在最后一个
+
+## AIDL 接口定义
+
+```java
+package com.lulingfeng.whtest.aidl;
+
+import com.lulingfeng.whtest.aidl.IRemoteServiceCallback;
+// Declare any non-default types here with import statements
+
+interface IRemoteService {
+    /**
+     * Demonstrates some basic types that you can use as parameters
+     * and return values in AIDL.
+     */
+    void basicTypes(int anInt, long aLong, boolean aBoolean, float aFloat,
+            double aDouble, String aString) = 1;
+    void registerRemoteCallback(in IRemoteServiceCallback remoteCallback) = 2;
+}
+```
+
+1. AIDL 的接口对应关系，默认是按顺序一一对应的
+2. 接口赋予id 之后，则不再以顺序来对应，改为以id 相对应
+3. oneway 修饰，代表接口是异步调用，不用等待接口执行完成
