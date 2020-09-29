@@ -1,6 +1,6 @@
 @echo off
 
-set msg=%1
+set msg=%~1
 set colorMod=%2
 set colorAttr=%3
 if "" equ "%colorAttr%" set colorAttr=fd
@@ -30,7 +30,7 @@ goto noError
 set msg="Error String containing forbidden character"
 set colorAttr=fc
 :noError
-
+set msg="%msg%"
 if "%colorMod%" equ "1" (
 set /p= <nul>%msg%&findstr /a:%colorAttr% .* %msg%*&del /q %msg%
 ) else (
