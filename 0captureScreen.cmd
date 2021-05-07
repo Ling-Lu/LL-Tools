@@ -1,4 +1,5 @@
 @echo off
+adb root
 set filename=screenshot.png
 set filePath=C:\Users\%username%
 echo capturing
