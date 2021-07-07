@@ -18,6 +18,23 @@ rem funtions here
 
 rem comment following***********************************************************************************************************
 
+:: function manual ,demo
+rem ÍË³öº¯ÊıÁ½¸ö·½·¨£º1. goto :eof 2. exit /b 0 (´ø·µ»ØÖµ%errolevel% ÍË³ö£©
+rem It means the function end,and in the main function it will make the program exit
+
+rem º¯Êı·µ»ØÖµÁ½¸ö·½·¨´ø»Ø https://www.icode9.com/content-4-360767.html
+rem º¯Êı·µ»ØÖµ.bat
+set returnValue=9
+echo %returnValue%
+call :funcdemo returnValue
+echo returned %returnValue%
+echo errolevel %errolevel%
+:funcdemo
+set %~1=0
+exit /b 99
+goto :eof
+
+
 :: func(count the lines) two methods here---------------------------------------------------------
 set /a cnt=0
 for /f "delims=" %%i in ('adb devices'
@@ -40,12 +57,9 @@ goto done
 :count 
 set /a cnt=%cnt%+1
 goto :eof
-:: func(count the lines) done
+::done
 
-::goto :eof----------------------------------------------------------------------------------------
-::It means the function end,and in the main function it will make the program exit
-
-::change word color--------------------------------------------------------------------------------
+:: func(change word color) two methods here--------------------------------------------------------------------------------
 
 set msg="sameplestring"
 echo. >%msg%&findstr /a:a .* %msg%*&del /q %msg%
@@ -111,13 +125,13 @@ goto :eof
 [8m ÏûÒş ²»ÖªµÀÉ¶Ğ§¹û
 [30m -- \33[37m ÉèÖÃÇ°¾°É« 
 [40m -- \33[47m ÉèÖÃ±³¾°É« 
-::get random number(1-100)-------------------------------------------------------------------------
+:: func(get random number(1-100)) two methods here-------------------------------------------------------------------------
 set /a RandomNumber=%random%%%100+1
 echo RandomNumber = %RandomNumber%
 set /a RandomNumber=%random:~0,2%+1
 echo RandomNumber = %RandomNumber%
 
-::cnd the length of the string---------------------------------------------------------------------
+:: func(cnd the length of the string)---------------------------------------------------------------------
 set str=123456789ÄãºÃadbdef
 set cnt=0
 :cntCharacter
@@ -127,7 +141,6 @@ set /a cnt+=1
 goto cntCharacter
 )
 echo charater number = %cnt%
-
 
 rem comment done****************************************************************************************************************
 
