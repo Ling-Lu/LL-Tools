@@ -17,8 +17,7 @@ echo %cd%
 
 :loop
 timeout /t 60
-date /t
-time /t
+date /t & time /t
 
 echo looking for *.rar
 for /f "delims=" %%a in ('dir *.rar /b /a-d-h'
@@ -28,6 +27,12 @@ call :unzip %%a
 
 echo looking for *.zip
 for /f "delims=" %%a in ('dir *.zip /b /a-d-h'
+)do (
+call :unzip %%a
+)
+
+echo looking for *.7z
+for /f "delims=" %%a in ('dir *.7z /b /a-d-h'
 )do (
 call :unzip %%a
 )
@@ -43,11 +48,19 @@ goto loop
 
 REM unzip
 :unzip
-set name=%~nx1
-set name=%name:.=_%
-if not exist %name% (
-echo unzipping %1
-WinRAR  x %1 %name%/
-echo unzip done %1
+set rn=%~nx1
+set rn=%rn:(=_%
+set rn=%rn:)=_%
+if not exist %rn% (
+move /y "%1" %rn%
 )
+
+set name=%rn:.=_%
+
+if not exist %name% (
+echo [1;36m unzipping %rn% [0m
+"C:\Program Files\WinRAR\WinRAR"  x "%rn%" %name%\
+echo unzip done %rn%
+)
+
 goto :eof
